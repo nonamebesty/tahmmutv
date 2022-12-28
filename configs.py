@@ -1,18 +1,18 @@
-# (c) @AbirHasan2005
+# (c) @JAsuran2p0
 
 import os
 
 
 class Config(object):
-	API_ID = int(os.environ.get("API_ID", "0"))
-	API_HASH = os.environ.get("API_HASH")
-	BOT_TOKEN = os.environ.get("BOT_TOKEN")
-	BOT_USERNAME = os.environ.get("BOT_USERNAME")
-	DB_CHANNEL = int(os.environ.get("DB_CHANNEL", "-100"))
-	BOT_OWNER = int(os.environ.get("BOT_OWNER", "1445283714"))
-	DATABASE_URL = os.environ.get("DATABASE_URL")
-	UPDATES_CHANNEL = os.environ.get("UPDATES_CHANNEL", "")
-	LOG_CHANNEL = os.environ.get("LOG_CHANNEL", None)
+	API_ID = 1923471
+	API_HASH = "fcdc178451cd234e63faefd38895c991"
+	BOT_TOKEN = "5670135699:AAG40R23a7vhHXYmDlGDYNPe-N2xDACD8QM"
+	BOT_USERNAME = "ppvideostoressbot"
+	DB_CHANNEL = int(os.environ.get("DB_CHANNEL", "-1001188070894"))
+	BOT_OWNER = int(os.environ.get("BOT_OWNER", "880087645"))
+	DATABASE_URL = os.environ.get("DATABASE_URL", "mongodb+srv://video:video@rishi.fzpls33.mongodb.net/?retryWrites=true&w=majority")
+	UPDATES_CHANNEL = os.environ.get("UPDATES_CHANNEL", "AsuranMoviefinder")
+	LOG_CHANNEL = os.environ.get("LOG_CHANNEL",  "-1001188070894")
 	BANNED_USERS = set(int(x) for x in os.environ.get("BANNED_USERS", "1234567890").split())
 	FORWARD_AS_COPY = bool(os.environ.get("FORWARD_AS_COPY", True))
 	BROADCAST_AS_COPY = bool(os.environ.get("BROADCAST_AS_COPY", False))
@@ -30,20 +30,20 @@ Send me any file I will save it in my Database. Also works for channel. Add me t
 
 📡 **Hosted on:** [Heroku](https://heroku.com)
 
-🧑🏻‍💻 **Developer:** @AbirHasan2005
+🧑🏻‍💻 **Developer:** @JAsuran2p0
 
-👥 **Support Group:** [Linux Repositories](https://t.me/DevsZone)
+👥 **Support Group:** [Catchme](https://t.me/jasuranbots)
 
-📢 **Updates Channel:** [Discovery Projects](https://t.me/Discovery_Updates)
+📢 **Updates Channel:** [JAsuran Serials](https://t.me/JAsuranserials)
 """
 	ABOUT_DEV_TEXT = f"""
-🧑🏻‍💻 **Developer:** @AbirHasan2005
+🧑🏻‍💻 **Developer:** @JAsuran2p0
 
 Developer is Super Noob. Just Learning from Official Docs. Please Donate the developer for Keeping the Service Alive.
 
 Also remember that developer will Delete Adult Contents from Database. So better don't Store Those Kind of Things.
 
-[Donate Now](https://www.paypal.me/AbirHasan2005) (PayPal)
+[Donate Now](https://www.paypal.me/) (PayPal)
 """
 	HOME_TEXT = """
 Hi, [{}](tg://user?id={})\n\nThis is Permanent **File Store Bot**.
