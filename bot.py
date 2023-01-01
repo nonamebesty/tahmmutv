@@ -146,7 +146,7 @@ async def main(bot: Client, message: Message):
             quote=True,
             disable_web_page_preview=True
         )
-        elif message.chat.type == enums.ChatType.CHANNEL:
+    elif message.chat.type == enums.ChatType.CHANNEL:
             if (message.chat.id == int(Config.LOG_CHANNEL)) or (message.chat.id == int(Config.UPDATES_CHANNEL)) or message.forward_from_chat or message.forward_from:
             return
         elif int(message.chat.id) in Config.BANNED_CHAT_IDS:
