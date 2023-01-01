@@ -1,4 +1,4 @@
-git+https://github.com/pyrogram/pyrogram
+Pyrogram==2.0.93
 TgCrypto
 motor
 aiofiles
