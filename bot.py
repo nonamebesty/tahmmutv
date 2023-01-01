@@ -11,7 +11,8 @@ from pyrogram import (
     filters
 )
 
-from pyrogram.enums
+from pyrogram.enums import ChatType
+
 from pyrogram.errors import (
     UserNotParticipant,
     FloodWait,
