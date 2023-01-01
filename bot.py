@@ -8,9 +8,9 @@ from binascii import (
 )
 from pyrogram import (
     Client,
-    enum34,
     filters
 )
+from Pyrogram import (enums)
 from pyrogram.errors import (
     UserNotParticipant,
     FloodWait,
