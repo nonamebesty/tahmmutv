@@ -121,7 +121,7 @@ async def start(bot: Client, cmd: Message):
 async def main(bot: Client, message: Message):
 
     #if message.chat.type == enums.ChatType.PRIVATE:
-    if message.chat.type == "private":
+    if message.chat.type == PRIVATE:
 
         await add_user_to_database(bot, message)
 
@@ -148,7 +148,7 @@ async def main(bot: Client, message: Message):
             disable_web_page_preview=True
         )
     #elif message.chat.type == enums.ChatType.CHANNEL:
-    elif message.chat.type == "channel":
+    elif message.chat.type == CHANNEL:
         if (message.chat.id == int(Config.LOG_CHANNEL)) or (message.chat.id == int(Config.UPDATES_CHANNEL)) or message.forward_from_chat or message.forward_from:
             return
         elif int(message.chat.id) in Config.BANNED_CHAT_IDS:
