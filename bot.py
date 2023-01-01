@@ -11,7 +11,7 @@ from pyrogram import (
     filters
 )
 
-from pyrogram import ChatType
+from enum import ChatType
 
 from pyrogram.errors import (
     UserNotParticipant,
