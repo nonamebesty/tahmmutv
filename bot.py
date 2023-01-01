@@ -11,7 +11,7 @@ from pyrogram import (
     filters
 )
 
-from pyrogram.enum import Enum
+from enum import Enum
 from pyrogram.errors import (
     UserNotParticipant,
     FloodWait,
