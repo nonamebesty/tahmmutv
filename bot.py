@@ -12,7 +12,7 @@ from pyrogram import (
 )
 
 from enum import Enum
-import enum
+import enums
 from pyrogram.errors import (
     UserNotParticipant,
     FloodWait,
@@ -120,7 +120,7 @@ async def start(bot: Client, cmd: Message):
 @Bot.on_message((filters.document | filters.video | filters.audio) & ~filters.chat(Config.DB_CHANNEL))
 async def main(bot: Client, message: Message):
 
-    if message.chat.type == enum.ChatType.PRIVATE:
+    if message.chat.type == enums.ChatType.PRIVATE:
 
         await add_user_to_database(bot, message)
 
@@ -146,7 +146,7 @@ async def main(bot: Client, message: Message):
             quote=True,
             disable_web_page_preview=True
         )
-    elif message.chat.type == enum.ChatType.CHANNEL:
+    elif message.chat.type == enums.ChatType.CHANNEL:
         if (message.chat.id == int(Config.LOG_CHANNEL)) or (message.chat.id == int(Config.UPDATES_CHANNEL)) or message.forward_from_chat or message.forward_from:
             return
         elif int(message.chat.id) in Config.BANNED_CHAT_IDS:
