@@ -12,7 +12,7 @@ from pyrogram import (
 )
 
 from enum import Enum
-import enums
+import enum
 from pyrogram.errors import (
     UserNotParticipant,
     FloodWait,
