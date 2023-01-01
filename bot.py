@@ -10,7 +10,7 @@ from pyrogram import (
     Client,
     filters
 )
-from enums import Enum
+from enum import Enums
 from pyrogram.errors import (
     UserNotParticipant,
     FloodWait,
