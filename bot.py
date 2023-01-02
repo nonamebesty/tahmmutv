@@ -8,10 +8,10 @@ from binascii import (
 )
 from pyrogram import (
     Client,
-    filters
+    filters, enums
 )
 
-from pyrogram import Enums.ChatType
+#from pyrogram import Enums.ChatType
 
 from pyrogram.errors import (
     UserNotParticipant,
