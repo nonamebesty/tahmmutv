@@ -28,7 +28,7 @@ Send me any file I will save it in my Database. Also works for channel. Add me t
 
 📚 **Library:** [Pyrogram](https://docs.pyrogram.org)
 
-📡 **Hosted on:** [Heroku](https://heroku.com)
+📡 **Hosted on:** [Render](https://render.com)
 
 🧑🏻‍💻 **Developer:** @JAsuran2p0
 
