@@ -4,15 +4,15 @@ import os
 
 
 class Config(object):
-	API_ID = 1923471
-	API_HASH = "fcdc178451cd234e63faefd38895c991"
-	BOT_TOKEN = "5572364139:AAF1H7rOLKHssx61pc-A5DdDraod9pfKUew"
-	BOT_USERNAME = "filestoreasu4bot"
-	DB_CHANNEL = int(os.environ.get("DB_CHANNEL", "-1001188070894"))
-	BOT_OWNER = int(os.environ.get("BOT_OWNER", "880087645"))
+	API_ID = 2817222
+	API_HASH = "aed9f2af23e0df07d7f34011e8a3c86f"
+	BOT_TOKEN = "5898725756:AAGgcn5moV1k0v_iZWsP4Zj7aZAEgMp16yo"
+	BOT_USERNAME = "FileStoreOfficialBot"
+	DB_CHANNEL = int(os.environ.get("DB_CHANNEL", "-1001562317304"))
+	BOT_OWNER = int(os.environ.get("BOT_OWNER", "1562317304"))
 	DATABASE_URL = os.environ.get("DATABASE_URL", "mongodb+srv://Erichdaniken:Erichdaniken@cluster0.vhu3d.mongodb.net/?retryWrites=true&w=majority")
-	UPDATES_CHANNEL = os.environ.get("UPDATES_CHANNEL", "AsuranMoviefinder")
-	LOG_CHANNEL = -1001692224324
+	UPDATES_CHANNEL = os.environ.get("UPDATES_CHANNEL", "TamilLinksOfficial")
+	LOG_CHANNEL = -1001562317304
 	BANNED_USERS = set(int(x) for x in os.environ.get("BANNED_USERS", "1234567890").split())
 	FORWARD_AS_COPY = bool(os.environ.get("FORWARD_AS_COPY", True))
 	BROADCAST_AS_COPY = bool(os.environ.get("BROADCAST_AS_COPY", True))
@@ -22,7 +22,7 @@ class Config(object):
 This is Permanent Files Store Bot!
 Send me any file I will save it in my Database. Also works for channel. Add me to channel as Admin with Edit Permission, I will add Save Uploaded File in Channel & add Sharable Button Link.
 
-🤖 **My Name:** [Files Store Bot](https://t.me/{BOT_USERNAME})
+🤖 **My Name:** [Files Store Bot](https://t.me/{FileStoreOfficialBot})
 
 📝 **Language:** [Python3](https://www.python.org)
 
@@ -30,20 +30,20 @@ Send me any file I will save it in my Database. Also works for channel. Add me t
 
 📡 **Hosted on:** [Render](https://render.com)
 
-🧑🏻‍💻 **Developer:** @JAsuran2p0
+🧑🏻‍💻 **Developer:** @TamilLinksOfficial
 
-👥 **Support Group:** [Catchme](https://t.me/jasuranbots)
+👥 **Support Group:** [Channel TLO](https://t.me/TamilLinksOfficial)
 
-📢 **Updates Channel:** [JAsuran Serials](https://t.me/JAsuranserials)
+📢 **Updates Channel:** [TamilLinksOfficial](https://t.me/TamilLinksOfficial)
 """
 	ABOUT_DEV_TEXT = f"""
-🧑🏻‍💻 **Developer:** @JAsuran2p0
+🧑🏻‍💻 **Developer:** @TamilLinksOfficial
 
 Developer is Super Noob. Just Learning from Official Docs. Please Donate the developer for Keeping the Service Alive.
 
 Also remember that developer will Delete Adult Contents from Database. So better don't Store Those Kind of Things.
 
-[Donate Now](https://www.paypal.me/) (PayPal)
+[Donate Now](https://t.me/TamilDonationBot) (Donation Bot)
 """
 	HOME_TEXT = """
 Hi, [{}](tg://user?id={})\n\nThis is Permanent **File Store Bot**.
