@@ -6,8 +6,8 @@ import os
 class Config(object):
 	API_ID = 1923471
 	API_HASH = "fcdc178451cd234e63faefd38895c991"
-	BOT_TOKEN = "5572364139:AAF1H7rOLKHssx61pc-A5DdDraod9pfKUew"
-	BOT_USERNAME = "filestoreasu4bot"
+	BOT_TOKEN = "5594755883:AAF8cSNiYKLc659A-a6aqWFCM2fayFPtkD8"
+	BOT_USERNAME = "asumoviesharebot"
 	DB_CHANNEL = int(os.environ.get("DB_CHANNEL", "-1001188070894"))
 	BOT_OWNER = int(os.environ.get("BOT_OWNER", "880087645"))
 	DATABASE_URL = os.environ.get("DATABASE_URL", "mongodb+srv://Erichdaniken:Erichdaniken@cluster0.vhu3d.mongodb.net/?retryWrites=true&w=majority")
