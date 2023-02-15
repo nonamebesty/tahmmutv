@@ -36,5 +36,5 @@ async def send_media_and_reply(bot: Client, user_id: int, file_id: int):
     #await reply_forward(message=sent_message, file_id=file_id)
     await asyncio.sleep(30)
     #await asyncio.sleep(DELETE_TIME)
-    await sent_message asyncio.delete()
+    await sent_message remove()
     #await media_forward.delete()
