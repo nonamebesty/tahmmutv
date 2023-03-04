@@ -8,7 +8,7 @@ class Config(object):
 	API_HASH = "fcdc178451cd234e63faefd38895c991"
 	BOT_TOKEN = "5852899105:AAGyPXuplUXC6ir5iFOYIO9HwT4oYTYB7FQ"
 	BOT_USERNAME = "asufileslockerbot"
-	DB_CHANNEL = int(os.environ.get("DB_CHANNEL", "-1001188070894"))
+	DB_CHANNEL = int(os.environ.get("DB_CHANNEL", "-1001814192750"))
 	BOT_OWNER = int(os.environ.get("BOT_OWNER", "880087645"))
 	DATABASE_URL = os.environ.get("DATABASE_URL", "mongodb+srv://Erichdaniken:Erichdaniken@cluster0.vhu3d.mongodb.net/?retryWrites=true&w=majority")
 	UPDATES_CHANNEL = os.environ.get("UPDATES_CHANNEL", "asumoviefinder")
