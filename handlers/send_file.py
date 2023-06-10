@@ -7,11 +7,22 @@ from pyrogram.types import Message
 from pyrogram.errors import FloodWait
 from handlers.helpers import str_to_b64
 
+# get media type
+
+media_type = message.document or message.video or message.audio or message.photo
+
+# get file name
+
+file_name = media_type.file_name
+
+# get file size in MB
+
+file_size = round(media_type.file_size/1024/1024, 3)
 
 async def reply_forward(message: Message, file_id: int):
     try:
         await message.reply_text(
-            f"**Link:** https://telegram.me/{Config.BOT_USERNAME}?start=JAsuran_{str_to_b64(str(file_id))}",
+            f"**{file_name}\n\nLink:** https://telegram.me/{Config.BOT_USERNAME}?start=JAsuran_{str_to_b64(str(file_id))}",
             disable_web_page_preview=True, quote=True)
     except FloodWait as e:
         await asyncio.sleep(e.value)
