@@ -13,11 +13,7 @@ from handlers.helpers import str_to_b64
 
 # get file name
 
-file_name = media_type.file_name
-
-# get file size in MB
-
-#file_size = round(media_type.file_size/1024/1024, 3)
+#file_name = media_type.file_nam
 
 async def reply_forward(message: Message, file_id: int):
     try:
