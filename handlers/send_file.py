@@ -24,6 +24,14 @@ async def reply_forward(message: Message, file_id: int):
         await asyncio.sleep(e.value)
         await reply_forward(message, file_id)
 
+    #Asuran
+    # get media type
+    media = message.document or message.video or message.audio or message.photo
+    # get file name
+    file_name = media.file_name if media.file_name else ""
+    # get caption (if any)
+    caption = message.caption if media.file_name else ""
+
 
 async def media_forward(bot: Client, user_id: int, file_id: int):
     try:
