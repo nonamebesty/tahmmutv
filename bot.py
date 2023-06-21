@@ -373,7 +373,7 @@ async def button(bot: Client, cmd: CallbackQuery):
                 user = await bot.get_chat_member(channel_chat_id, cmd.message.chat.id)
                 if user.status == "kicked":
                     await cmd.message.edit(
-                        text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/AsuranMoviefinder).",
+                        text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/AsuranMoviefinders).",
                         disable_web_page_preview=True
                     )
                     return
@@ -461,6 +461,13 @@ async def button(bot: Client, cmd: CallbackQuery):
     try:
         await cmd.answer()
     except QueryIdInvalid: pass
+    #Asuran
+    # get media type
+    media = message.document or message.video or message.audio or message.photo
+    # get file name
+    file_name = media.file_name if media.file_name else ""
+    # get caption (if any)
+    caption = message.caption if media.file_name else ""
 
 
 Bot.run()
