@@ -461,13 +461,5 @@ async def button(bot: Client, cmd: CallbackQuery):
     try:
         await cmd.answer()
     except QueryIdInvalid: pass
-    #Asuran
-    # get media type
-    media = message.document or message.video or message.audio or message.photo
-    # get file name
-    file_name = media.file_name if media.file_name else ""
-    # get caption (if any)
-    caption = message.caption if media.file_name else ""
-
 
 Bot.run()
