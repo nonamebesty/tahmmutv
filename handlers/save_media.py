@@ -30,14 +30,6 @@ async def forward_to_channel(bot: Client, message: Message, editable: Message):
                 )
             )
         return await forward_to_channel(bot, message, editable)
-    #Asuran
-    # get media type
-    media = message.document or message.video or message.audio or message.photo
-    # get file name
-    file_name = media.file_name if media.file_name else ""
-    # get caption (if any)
-    caption = message.caption if media.file_name else ""
-
 
 async def save_batch_media_in_channel(bot: Client, editable: Message, message_ids: list):
     try:
