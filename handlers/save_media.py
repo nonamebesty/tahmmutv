@@ -86,9 +86,16 @@ async def save_media_in_channel(bot: Client, editable: Message, message: Message
         await forwarded_msg.reply_text(
             f"#PRIVATE_FILE:\n\n[{message.from_user.first_name}](tg://user?id={message.from_user.id}) Got File Link!",
             disable_web_page_preview=True)
-        share_link = f"https://telegram.me/{Config.BOT_USERNAME}?start=JAsuran_{str_to_b64(file_er_id)}"
+        #Asuran
+        # get media type
+        media = message.document or message.video or message.audio or message.photo
+        # get file name
+        file_name = media.file_name if media.file_name else ""
+        # get caption (if any)
+        caption = message.caption if media.file_name else ""
+        share_link = f"https://tx.me/{Config.BOT_USERNAME}?start=JAsuran_{str_to_b64(file_er_id)}"
         await editable.edit(
-            f"**Link:** {share_link}",
+            f"**{caption}\n\nLink:** {share_link}",
             reply_markup=InlineKeyboardMarkup(
                 [[InlineKeyboardButton("Open Link", url=share_link)],
                  [InlineKeyboardButton("Bots Channel", url="https://telegram.me/JAsuranBots"),
