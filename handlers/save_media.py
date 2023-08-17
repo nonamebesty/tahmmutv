@@ -91,11 +91,13 @@ async def save_media_in_channel(bot: Client, editable: Message, message: Message
         media = message.document or message.video or message.audio or message.photo
         # get file name
         file_name = media.file_name if media.file_name else ""
+        # get file size
+        file_size = round(media_type.file_size/1024/1024, 3)
         # get caption (if any)
         caption = message.caption if media.file_name else ""
         share_link = f"https://telegram.me/{Config.BOT_USERNAME}?start=JAsuran_{str_to_b64(file_er_id)}"
         await editable.edit(
-            f"**{caption}\n\nLink:** {share_link}",
+            f"**{caption}\n\nLink:** {share_link} - {file_size}",
             reply_markup=InlineKeyboardMarkup(
                 [[InlineKeyboardButton("Open Link", url=share_link)],
                  [InlineKeyboardButton("Bots Channel", url="https://telegram.me/JAsuranBots"),
