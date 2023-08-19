@@ -11,7 +11,15 @@ from pyrogram.types import (
 from pyrogram.errors import FloodWait
 from handlers.helpers import str_to_b64
 
-
+def humanbytes(size):
+    units = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB"]
+    size = float(size)
+    i = 0
+    while size >= 1024.0 and i < len(units):
+        i += 1
+        size /= 1024.0
+    return "%.2f %s" % (size, units[i])
+    
 async def forward_to_channel(bot: Client, message: Message, editable: Message):
     try:
         __SENT = await message.forward(Config.DB_CHANNEL)
@@ -92,12 +100,13 @@ async def save_media_in_channel(bot: Client, editable: Message, message: Message
         # get file name
         file_name = media.file_name if media.file_name else ""
         # get file size
-        file_size = round(media.file_size/(1024*1024), 1)
+        #file_size = round(media.file_size/(1024*1024), 1)
+        file_size = media.file_size
         # get caption (if any)
         caption = message.caption if media.file_name else ""
         share_link = f"https://telegram.me/{Config.BOT_USERNAME}?start=JAsuran_{str_to_b64(file_er_id)}"
         await editable.edit(
-            f"**{caption} - {file_size}MB\n\nLink:** {share_link}",
+            f"**{caption} - {file_size}\n\nLink:** {share_link}",
             reply_markup=InlineKeyboardMarkup(
                 [[InlineKeyboardButton("Open Link", url=share_link)],
                  [InlineKeyboardButton("Bots Channel", url="https://telegram.me/JAsuranBots"),
