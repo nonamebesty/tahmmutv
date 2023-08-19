@@ -18,7 +18,7 @@ def humanbytes(size):
         return ""
     power = 2**10
     n = 0
-    Dic_powerN = {0: ' ', 1: 'Ki', 2: 'Mi', 3: 'Gi', 4: 'Ti'}
+    Dic_powerN = {0: ' ', 1: 'K', 2: 'M', 3: 'G', 4: 'T'}
     while size > power:
         size /= power
         n += 1
@@ -109,7 +109,7 @@ async def save_media_in_channel(bot: Client, editable: Message, message: Message
         file_name = media.file_name if media.file_name else ""
         # get file size
         #file_size = round(media.file_size/(1024*1024), 1)
-        file_size = human_size(media.file_size)
+        file_size = humanbytes(media.file_size)
         # get caption (if any)
         caption = message.caption if media.file_name else ""
         share_link = f"https://telegram.me/{Config.BOT_USERNAME}?start=JAsuran_{str_to_b64(file_er_id)}"
