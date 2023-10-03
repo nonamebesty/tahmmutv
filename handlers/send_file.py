@@ -7,24 +7,24 @@ from pyrogram.types import Message
 from pyrogram.errors import FloodWait
 from handlers.helpers import str_to_b64
 
-# get media type
-
-#media_type = message.document or message.video or message.audio or message.photo
-
-# get file name
-
-#file_name = media_type.file_nam
 
 async def reply_forward(message: Message, file_id: int):
     try:
+        #Asuran
+        # get media type
+        media = message.document or message.video or message.audio or message.photo
+        # get file name
+        file_name = media.file_name if media.file_name else ""
+        # get caption (if any)
+        caption = message.caption if media.file_name else ""
         await message.reply_text(
-            f"**Link:** https://telegram.me/{Config.BOT_USERNAME}?start=AsBots_{str_to_b64(str(file_id))}",
+            f"**Files will be Deleted After 15 min**\n\n"
+            f"**__To Retrive the Stored File, just again open the link!__**\n\n"
+            f"**{caption}\n\nLink:** https://telegram.me/{Config.BOT_USERNAME}?start=AsBots_{str_to_b64(str(file_id))}",
             disable_web_page_preview=True, quote=True)
     except FloodWait as e:
         await asyncio.sleep(e.value)
         await reply_forward(message, file_id)
-
-
 
 
 async def media_forward(bot: Client, user_id: int, file_id: int):
@@ -38,17 +38,17 @@ async def media_forward(bot: Client, user_id: int, file_id: int):
     except FloodWait as e:
         await asyncio.sleep(e.value)
         return media_forward(bot, user_id, file_id)
-
-async def delete_file(file_id: int):
-
-    await asyncio.sleep(120)  # wait for 2 minutes
-
-    # Delete the file using the file ID
-
-    # Code to delete the file goes here
+        await message.delete()
     
 async def send_media_and_reply(bot: Client, user_id: int, file_id: int):
     sent_message = await media_forward(bot, user_id, file_id)
-    #await reply_forward(message=sent_message, file_id=file_id)
-    asyncio.create_task(delete_file(file_id))  # schedule the file deletion task
-    await asyncio.sleep(2)
+    await reply_forward(message=sent_message, file_id=file_id)
+    asyncio.create_task(delete_after_delay(sent_message, 900))
+
+async def delete_after_delay(message, delay):
+    await asyncio.sleep(delay)
+    try:
+        await message.delete()
+    except Exception as e:
+        print(f"Error deleting message {sent_message.message_id}: {e}")
+
