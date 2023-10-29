@@ -29,16 +29,8 @@ Send me any file I will save it in my Database. Also works for channel. Add me t
 📚 **Library:** [Pyrogram](https://docs.pyrogram.org)
 
 📡 **Hosted on:** [Render](https://render.com)
-
-🧑🏻‍💻 **Developer:** @JAsuran2p0
-
-👥 **Support Group:** [AS_Bots](https://t.me/AS_botzz)
-
-📢 **Updates Channel:** [JAsuran Serials](https://t.me/JAsuranserials)
 """
 	ABOUT_DEV_TEXT = f"""
-🧑🏻‍💻 **Developer:** @JAsuran2p0
-
 Developer is Super Noob. Just Learning from Official Docs. Please Donate the developer for Keeping the Service Alive.
 
 Also remember that developer will Delete Adult Contents from Database. So better don't Store Those Kind of Things.
