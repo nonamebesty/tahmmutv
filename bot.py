@@ -39,7 +39,11 @@ from handlers.save_media import (
     save_media_in_channel,
     save_batch_media_in_channel
 )
+from urllib.parse import quote as url_quote
 
+def some_function(url):
+    quoted_url = url_quote(url)
+    return quoted_url
 MediaList = {}
 
 Bot = Client(
