@@ -1,25 +1,49 @@
+# (c) @JAsuran
+
 import os
 import asyncio
 import traceback
-from binascii import Error
-from pyrogram import Client, filters, enums
-from pyrogram.errors import UserNotParticipant, FloodWait, QueryIdInvalid
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, Message
+from binascii import (
+    Error
+)
+from pyrogram import (
+    Client,
+    filters, enums
+)
+
+#from pyrogram import Enums.ChatType
+
+from pyrogram.errors import (
+    UserNotParticipant,
+    FloodWait,
+    QueryIdInvalid
+)
+from pyrogram.types import (
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+    CallbackQuery,
+    Message
+)
 from configs import Config
 from handlers.database import db
 from handlers.add_user_to_db import add_user_to_database
 from handlers.send_file import send_media_and_reply
 from handlers.helpers import b64_to_str, str_to_b64
 from handlers.check_user_status import handle_user_status
-from handlers.force_sub_handler import handle_force_sub, get_invite_link
+from handlers.force_sub_handler import (
+    handle_force_sub,
+    get_invite_link
+)
 from handlers.broadcast_handlers import main_broadcast_handler
-from handlers.save_media import save_media_in_channel, save_batch_media_in_channel
+from handlers.save_media import (
+    save_media_in_channel,
+    save_batch_media_in_channel
+)
 from urllib.parse import quote as url_quote
 
 def some_function(url):
     quoted_url = url_quote(url)
     return quoted_url
-
 MediaList = {}
 
 Bot = Client(
@@ -30,14 +54,15 @@ Bot = Client(
     api_hash=Config.API_HASH
 )
 
-Bot.get_batch_link_waiting_for_filename = {}
 
 @Bot.on_message(filters.private)
 async def _(bot: Client, cmd: Message):
     await handle_user_status(bot, cmd)
 
+
 @Bot.on_message(filters.command("start") & filters.private)
 async def start(bot: Client, cmd: Message):
+
     if cmd.from_user.id in Config.BANNED_USERS:
         await cmd.reply_text("Sorry, You are banned.")
         return
@@ -45,7 +70,7 @@ async def start(bot: Client, cmd: Message):
         back = await handle_force_sub(bot, cmd)
         if back == 400:
             return
-
+    
     usr_cmd = cmd.text.split("_", 1)[-1]
     if usr_cmd == "/start":
         await add_user_to_database(bot, cmd)
@@ -87,20 +112,27 @@ async def start(bot: Client, cmd: Message):
         except Exception as err:
             await cmd.reply_text(f"Something went wrong!\n\n**Error:** `{err}`")
 
+
 @Bot.on_message((filters.document | filters.video | filters.audio | filters.photo) & ~filters.chat(Config.DB_CHANNEL))
 async def main(bot: Client, message: Message):
+
     if message.chat.type == enums.ChatType.PRIVATE:
+    
         await add_user_to_database(bot, message)
+
         if Config.UPDATES_CHANNEL is not None:
             back = await handle_force_sub(bot, message)
             if back == 400:
                 return
+
         if message.from_user.id in Config.BANNED_USERS:
             await message.reply_text("Sorry, You are banned!\n\nContact [Support Group](https://t.me/asuMoviefinders)",
                                      disable_web_page_preview=True)
             return
+
         if Config.OTHER_USERS_CAN_SAVE_FILE is False:
             return
+
         await message.reply_text(
             text="**Choose an option from below:**",
             reply_markup=InlineKeyboardMarkup([
@@ -148,9 +180,11 @@ async def main(bot: Client, message: Message):
                 disable_web_page_preview=True
             )
 
+
 @Bot.on_message(filters.private & filters.command("broadcast") & filters.user(Config.BOT_OWNER) & filters.reply)
 async def broadcast_handler_open(_, m: Message):
     await main_broadcast_handler(m, db)
+
 
 @Bot.on_message(filters.private & filters.command("status") & filters.user(Config.BOT_OWNER))
 async def sts(_, m: Message):
@@ -160,8 +194,10 @@ async def sts(_, m: Message):
         quote=True
     )
 
+
 @Bot.on_message(filters.private & filters.command("ban_user") & filters.user(Config.BOT_OWNER))
 async def ban(c: Client, m: Message):
+    
     if len(m.command) == 1:
         await m.reply_text(
             f"Use this command to ban any user from the bot.\n\n"
@@ -198,12 +234,14 @@ async def ban(c: Client, m: Message):
     except:
         traceback.print_exc()
         await m.reply_text(
-            f"Error occurred! Traceback given below\n\n`{traceback.format_exc()}`",
+            f"Error occoured! Traceback given below\n\n`{traceback.format_exc()}`",
             quote=True
         )
 
+
 @Bot.on_message(filters.private & filters.command("unban_user") & filters.user(Config.BOT_OWNER))
 async def unban(c: Client, m: Message):
+
     if len(m.command) == 1:
         await m.reply_text(
             f"Use this command to unban any user.\n\n"
@@ -220,14 +258,12 @@ async def unban(c: Client, m: Message):
         try:
             await c.send_message(
                 user_id,
-                "You have been unbanned from using this bot. Please be cautious from next time onwards.\n\n"
-                "**Message from the admin**"
+                f"Your ban was lifted!"
             )
             unban_log_text += '\n\nUser notified successfully!'
         except:
             traceback.print_exc()
             unban_log_text += f"\n\nUser notification failed! \n\n`{traceback.format_exc()}`"
-
         await db.remove_ban(user_id)
         print(unban_log_text)
         await m.reply_text(
@@ -241,54 +277,193 @@ async def unban(c: Client, m: Message):
             quote=True
         )
 
+
+@Bot.on_message(filters.private & filters.command("banned_users") & filters.user(Config.BOT_OWNER))
+async def _banned_users(_, m: Message):
+    
+    all_banned_users = await db.get_all_banned_users()
+    banned_usr_count = 0
+    text = ''
+
+    async for banned_user in all_banned_users:
+        user_id = banned_user['id']
+        ban_duration = banned_user['ban_status']['ban_duration']
+        banned_on = banned_user['ban_status']['banned_on']
+        ban_reason = banned_user['ban_status']['ban_reason']
+        banned_usr_count += 1
+        text += f"> **user_id**: `{user_id}`, **Ban Duration**: `{ban_duration}`, " \
+                f"**Banned on**: `{banned_on}`, **Reason**: `{ban_reason}`\n\n"
+    reply_text = f"Total banned user(s): `{banned_usr_count}`\n\n{text}"
+    if len(reply_text) > 4096:
+        with open('banned-users.txt', 'w') as f:
+            f.write(reply_text)
+        await m.reply_document('banned-users.txt', True)
+        os.remove('banned-users.txt')
+        return
+    await m.reply_text(reply_text, True)
+
+
+@Bot.on_message(filters.private & filters.command("clear_batch"))
+async def clear_user_batch(bot: Client, m: Message):
+    MediaList[f"{str(m.from_user.id)}"] = []
+    await m.reply_text("Cleared your batch files successfully!")
+
+
 @Bot.on_callback_query()
-async def callback_query_handler(bot: Client, cb: CallbackQuery):
-    if cb.data.startswith("addToBatchTrue"):
-        user_id = cb.from_user.id
-        message_id = cb.message.id
-        MediaList[user_id] = []
-        await cb.message.edit_text("Send me the next file to add to the batch, or use the /done command when you're finished.")
+async def button(bot: Client, cmd: CallbackQuery):
 
-    elif cb.data.startswith("addToBatchFalse"):
-        user_id = cb.from_user.id
-        message_id = cb.message.reply_to_message.id
-        await save_media_in_channel(bot, cb.message.reply_to_message)
-        await cb.message.edit_text("Your file has been saved!")
-
-@Bot.on_message(filters.private & filters.command("done"))
-async def done(bot: Client, cmd: Message):
-    user_id = cmd.from_user.id
-    if user_id in MediaList and MediaList[user_id]:
-        await cmd.reply_text("Please enter the filename for this batch.")
-        Bot.get_batch_link_waiting_for_filename[user_id] = True
-    else:
-        await cmd.reply_text("You haven't added any files to a batch. Please use /addtobatch to start a new batch.")
-
-@Bot.on_message(filters.private)
-async def get_filename(bot: Client, message: Message):
-    user_id = message.from_user.id
-    if user_id in Bot.get_batch_link_waiting_for_filename:
-        Bot.get_batch_link_waiting_for_filename.pop(user_id)
-        filename = message.text
-        batch_file_ids = MediaList.pop(user_id, [])
-        batch_link = await save_batch_media_in_channel(bot, user_id, batch_file_ids, filename)
-        await message.reply_text(f"Batch link generated: {batch_link}")
-
-async def save_batch_media_in_channel(bot, user_id, file_ids, filename):
-    try:
-        batch_message = await bot.send_message(
-            chat_id=Config.DB_CHANNEL,
-            text="\n".join([str(file_id) for file_id in file_ids]),
-            disable_web_page_preview=True
+    cb_data = cmd.data
+    if "aboutbot" in cb_data:
+        await cmd.message.edit(
+            Config.ABOUT_BOT_TEXT,
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton("Source Codes of Bot",
+                                             url="https://github.com/JAsuran/PyroFilesStoreBot")
+                    ],
+                    [
+                        InlineKeyboardButton("Go Home", callback_data="gotohome"),
+                        InlineKeyboardButton("About Dev", callback_data="aboutdevs")
+                    ]
+                ]
+            )
         )
-        batch_link = f"https://t.me/{Config.BOT_USERNAME}?start=AsBots_{str_to_b64(str(batch_message.id))}_{filename}"
-        return batch_link
-    except Exception as e:
-        return f"Failed to save batch media in channel: {e}"
 
-def start_bot():
-    print("Bot started.")
-    Bot.run()
+    elif "aboutdevs" in cb_data:
+        await cmd.message.edit(
+            Config.ABOUT_DEV_TEXT,
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton("Source Codes of Bot",
+                                             url="https://github.com/JAsuran/PyroFilesStoreBot")
+                    ],
+                    [
+                        InlineKeyboardButton("About Bot", callback_data="aboutbot"),
+                        InlineKeyboardButton("Go Home", callback_data="gotohome")
+                    ]
+                ]
+            )
+        )
 
-if __name__ == "__main__":
-    start_bot()
+    elif "gotohome" in cb_data:
+        await cmd.message.edit(
+            Config.HOME_TEXT.format(cmd.message.chat.first_name, cmd.message.chat.id),
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton("Support Group", url="https://t.me/AsMoviefinders"),
+                        InlineKeyboardButton("Bots Channel", url="https://t.me/AS_botzz")
+                    ],
+                    [
+                        InlineKeyboardButton("About Bot", callback_data="aboutbot"),
+                        InlineKeyboardButton("About Dev", callback_data="aboutdevs")
+                    ]
+                ]
+            )
+        )
+
+    elif "refreshForceSub" in cb_data:
+        if Config.UPDATES_CHANNEL:
+            if Config.UPDATES_CHANNEL.startswith("-100"):
+                channel_chat_id = int(Config.UPDATES_CHANNEL)
+            else:
+                channel_chat_id = Config.UPDATES_CHANNEL
+            try:
+                user = await bot.get_chat_member(channel_chat_id, cmd.message.chat.id)
+                if user.status == "kicked":
+                    await cmd.message.edit(
+                        text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/AsuMoviefinders).",
+                        disable_web_page_preview=True
+                    )
+                    return
+            except UserNotParticipant:
+                invite_link = await get_invite_link(channel_chat_id)
+                await cmd.message.edit(
+                    text="**You Still Didn't Join ☹️, Please Join My Updates Channel to use this Bot!**\n\n"
+                         "Due to Overload, Only Channel Subscribers can use the Bot!",
+                    reply_markup=InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton("🤖 Join Updates Channel", url=invite_link.invite_link)
+                            ],
+                            [
+                                InlineKeyboardButton("🔄 Refresh 🔄", callback_data="refreshmeh")
+                            ]
+                        ]
+                    )
+                )
+                return
+            except Exception:
+                await cmd.message.edit(
+                    text="Something went Wrong. Contact my [Support Group](https://t.me/AsuMoviefinders).",
+                    disable_web_page_preview=True
+                )
+                return
+        await cmd.message.edit(
+            text=Config.HOME_TEXT.format(cmd.message.chat.first_name, cmd.message.chat.id),
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton("Support Group", url="https://t.me/asumoviefinders"),
+                        InlineKeyboardButton("Bots Channel", url="https://t.me/AS_botzz")
+                    ],
+                    [
+                        InlineKeyboardButton("About Bot", callback_data="aboutbot"),
+                        InlineKeyboardButton("About Dev", callback_data="aboutdevs")
+                    ]
+                ]
+            )
+        )
+
+    elif cb_data.startswith("ban_user_"):
+        user_id = cb_data.split("_", 2)[-1]
+        if Config.UPDATES_CHANNEL is None:
+            await cmd.answer("Sorry Sir, You didn't Set any Updates Channel!", show_alert=True)
+            return
+        if not int(cmd.from_user.id) == Config.BOT_OWNER:
+            await cmd.answer("You are not allowed to do that!", show_alert=True)
+            return
+        try:
+            await bot.kick_chat_member(chat_id=int(Config.UPDATES_CHANNEL), user_id=int(user_id))
+            await cmd.answer("User Banned from Updates Channel!", show_alert=True)
+        except Exception as e:
+            await cmd.answer(f"Can't Ban Him!\n\nError: {e}", show_alert=True)
+
+    elif "addToBatchTrue" in cb_data:
+        if MediaList.get(f"{str(cmd.from_user.id)}", None) is None:
+            MediaList[f"{str(cmd.from_user.id)}"] = []
+        file_id = cmd.message.reply_to_message.id
+        MediaList[f"{str(cmd.from_user.id)}"].append(file_id)
+        await cmd.message.edit("File Saved in Batch!\n\n"
+                               "Press below button to get batch link.",
+                               reply_markup=InlineKeyboardMarkup([
+                                   [InlineKeyboardButton("Get Batch Link", callback_data="getBatchLink")],
+                                   [InlineKeyboardButton("Close Message", callback_data="closeMessage")]
+                               ]))
+
+    elif "addToBatchFalse" in cb_data:
+        await save_media_in_channel(bot, editable=cmd.message, message=cmd.message.reply_to_message)
+
+    elif "getBatchLink" in cb_data:
+        message_ids = MediaList.get(f"{str(cmd.from_user.id)}", None)
+        if message_ids is None:
+            await cmd.answer("Batch List Empty!", show_alert=True)
+            return
+        await cmd.message.edit("Please wait, generating batch link ...")
+        await save_batch_media_in_channel(bot=bot, editable=cmd.message, message_ids=message_ids)
+        MediaList[f"{str(cmd.from_user.id)}"] = []
+
+    elif "closeMessage" in cb_data:
+        await cmd.message.delete(True)
+
+    try:
+        await cmd.answer()
+    except QueryIdInvalid: pass
+
+Bot.run()
