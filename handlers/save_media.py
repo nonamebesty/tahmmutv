@@ -2,14 +2,18 @@
 
 import asyncio
 from configs import Config
-from pyrogram import Client
+from pyrogram import Client, filters
 from pyrogram.types import (
     Message,
     InlineKeyboardMarkup,
-    InlineKeyboardButton
+    InlineKeyboardButton,
+    CallbackQuery
 )
 from pyrogram.errors import FloodWait
 from handlers.helpers import str_to_b64
+
+# Dictionary to store user state for filename input
+user_filename_input = {}
 
 def humanbytes(size):
     # https://stackoverflow.com/a/49361727/4723940
@@ -96,25 +100,40 @@ async def save_batch_media_in_channel(bot: Client, editable: Message, message_id
 
 
 async def save_media_in_channel(bot: Client, editable: Message, message: Message):
+    user_id = message.from_user.id
+    user_filename_input[user_id] = {"editable": editable, "message": message}
+
+    await editable.edit("Please provide a filename for this file:")
+    return
+
+@Client.on_message(filters.private & filters.text)
+async def receive_filename(bot: Client, message: Message):
+    user_id = message.from_user.id
+
+    if user_id not in user_filename_input:
+        return
+
+    filename = message.text
+    data = user_filename_input.pop(user_id)
+    editable = data["editable"]
+    original_message = data["message"]
+
     try:
-        forwarded_msg = await message.forward(Config.DB_CHANNEL)
+        forwarded_msg = await original_message.forward(Config.DB_CHANNEL)
         file_er_id = str(forwarded_msg.id)
         await forwarded_msg.reply_text(
-            f"#PRIVATE_FILE:\n\n[{message.from_user.first_name}](tg://user?id={message.from_user.id}) Got File Link!",
+            f"#PRIVATE_FILE:\n\n[{original_message.from_user.first_name}](tg://user?id={original_message.from_user.id}) Got File Link!",
             disable_web_page_preview=True)
         #Asuran
         # get media type
-        media = message.document or message.video or message.audio or message.photo
-        # get file name
-        file_name = media.file_name if media.file_name else ""
+        media = original_message.document or original_message.video or original_message.audio or original_message.photo
         # get file size
-        #file_size = round(media.file_size/(1024*1024), 1)
         file_size = humanbytes(media.file_size)
         # get caption (if any)
-        caption = message.caption if media.file_name else ""
-        share_link = f"https://redirect.nonamebesty.workers.dev?start=Shakthimaan_{str_to_b64(file_er_id)}"
+        caption = original_message.caption if media.file_name else ""
+        share_link = f"https://redirect.nonamebesty.workers.dev?start=Shakthimaan_{str_to_b64(file_er_id)}_{filename}"
         await editable.edit(
-            f"<blockquote>**{caption} - {file_size}\n\n{share_link}**</blockquote>",
+            f"<blockquote>**{caption} - {file_size}\n\nFilename: {filename}\n\n{share_link}**</blockquote>",
             reply_markup=InlineKeyboardMarkup(
                 [[InlineKeyboardButton("Open Link", url=share_link)],
                  [InlineKeyboardButton("Bots Channel", url="https://telegram.me/AS_botzz"),
@@ -137,7 +156,7 @@ async def save_media_in_channel(bot: Client, editable: Message, message: Message
                     ]
                 )
             )
-        await save_media_in_channel(bot, editable, message)
+        await save_media_in_channel(bot, editable, original_message)
     except Exception as err:
         await editable.edit(f"Something Went Wrong!\n\n**Error:** `{err}`")
         await bot.send_message(
@@ -152,3 +171,10 @@ async def save_media_in_channel(bot: Client, editable: Message, message: Message
                 ]
             )
         )
+
+def start_bot():
+    print("Bot started.")
+    Bot.run()
+
+if __name__ == "__main__":
+    start_bot()
