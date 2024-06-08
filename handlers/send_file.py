@@ -21,7 +21,7 @@ async def reply_forward(message: Message, file_id: int):
             f"**Kindly Subscribe and Support My Youtube Channel: https://www.youtube.com/@JAsuranvideos**\n\n"
             f"**Files will be Deleted After 15 min**\n\n"
             f"**__To Retrive the Stored File, just again open the link!__**\n\n"
-            f"**{caption}\n\nLink:** https://redirect.nonamebesty.workers.dev?start=Shakthimaan_{str_to_b64(str(file_id))}",
+            f"**<blockquote>{caption}\n\nLink:** https://redirect.nonamebesty.workers.dev?start=Shakthimaan_{str_to_b64(str(file_id))}</blockquote>",
             disable_web_page_preview=True, quote=True)
     except FloodWait as e:
         await asyncio.sleep(e.value)
