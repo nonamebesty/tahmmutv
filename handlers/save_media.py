@@ -6,9 +6,9 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils import executor
 from pyrogram import Client, filters
-import config
+from configs import Config
 
-API_TOKEN = 'YOUR_BOT_TOKEN'
+
 
 # Initialize bot and dispatcher
 bot = Bot(token=API_TOKEN)
