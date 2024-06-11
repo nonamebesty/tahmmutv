@@ -132,7 +132,7 @@ async def save_media_in_channel(bot: Client, editable: Message, message: Message
         share_link = f"https://redirect.nonamebesty.workers.dev?start=Shakthimaan_{str_to_b64(file_er_id)}"
         short_link = get_short(share_link)
         await editable.edit(
-            f"**{file_name} - {file_size}\n\n{short_link}**",
+            f"**{file_name} - {file_size}\n\n🔗 {short_link}**",
             reply_markup=InlineKeyboardMarkup(
                 [[InlineKeyboardButton("Open Link", url=short_link)],
                  [InlineKeyboardButton("Bots Channel", url="https://telegram.me/AS_botzz"),
