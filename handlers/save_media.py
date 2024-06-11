@@ -10,6 +10,9 @@ from pyrogram.types import (
 )
 from pyrogram.errors import FloodWait
 from handlers.helpers import str_to_b64
+import string
+import random
+
 
 def generate_random_alphanumeric():
     """Generate a random 8-letter alphanumeric string."""
