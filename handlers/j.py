@@ -2,8 +2,12 @@
 
 import asyncio
 from configs import Config
-from pyrogram import Client, filters
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram import Client
+from pyrogram.types import (
+    Message,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton
+)
 from pyrogram.errors import FloodWait
 from handlers.helpers import str_to_b64
 
