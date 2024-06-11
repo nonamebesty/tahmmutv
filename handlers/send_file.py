@@ -8,7 +8,6 @@ from pyrogram.errors import FloodWait
 from handlers.helpers import str_to_b64
 import string
 import random
-import requests
 
 async def reply_forward(message: Message, file_id: int):
     try:
