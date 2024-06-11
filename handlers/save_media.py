@@ -74,7 +74,7 @@ async def batch(bot, message):
     await message.reply_text("How many files do you need to send?")
     user_data[message.chat.id] = {"state": ASK_FILES}
 
-@bot.on_message(filters.private & ~filters.command(["start", "batch"]))
+@bot.on_message(filters.private & ~filters.command(["batch"]))
 async def handle_message(bot, message):
     chat_id = message.chat.id
     if chat_id not in user_data:
