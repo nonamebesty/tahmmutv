@@ -67,10 +67,14 @@ async def delete_after_delay(message, delay):
 # Command handlers
 @bot.on_message(filters.command("start") & filters.private)
 async def start(bot, message):
-    await message.reply_text("Hello! How many files do you need to send?")
+    await message.reply_text("Hello! Please use /batch to start sending files.")
+
+@bot.on_message(filters.command("batch") & filters.private)
+async def batch(bot, message):
+    await message.reply_text("How many files do you need to send?")
     user_data[message.chat.id] = {"state": ASK_FILES}
 
-@bot.on_message(filters.private & ~filters.command("start"))
+@bot.on_message(filters.private & ~filters.command(["start", "batch"]))
 async def handle_message(bot, message):
     chat_id = message.chat.id
     if chat_id not in user_data:
