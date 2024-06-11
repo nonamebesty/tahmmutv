@@ -11,6 +11,20 @@ from pyrogram.types import (
 from pyrogram.errors import FloodWait
 from handlers.helpers import str_to_b64
 
+def generate_random_alphanumeric():
+    """Generate a random 8-letter alphanumeric string."""
+    characters = string.ascii_letters + string.digits
+    random_chars = ''.join(random.choice(characters) for _ in range(8))
+    return random_chars
+
+def get_short(url):
+    rget = requests.get(f"https://{Config.SHORTLINK_URL}/api?api={Config.SHORTLINK_API}&url={url}&alias={generate_random_alphanumeric()}")
+    rjson = rget.json()
+    if rjson["status"] == "success" or rget.status_code == 200:
+        return rjson["shortenedUrl"]
+    else:
+        return url
+
 def humanbytes(size):
     # https://stackoverflow.com/a/49361727/4723940
     # 2**10 = 1024
@@ -65,7 +79,7 @@ async def save_batch_media_in_channel(bot: Client, editable: Message, message_id
             ]])
         )
         share_link = f"https://redirect.nonamebesty.workers.dev?start=Shakthimaan_{str_to_b64(str(SaveMessage.id))}"
-
+        short_link = get_short(share_link)
         await editable.edit(
             f"{share_link}",
             reply_markup=InlineKeyboardMarkup(
@@ -79,7 +93,7 @@ async def save_batch_media_in_channel(bot: Client, editable: Message, message_id
             chat_id=int(Config.LOG_CHANNEL),
             text=f"#BATCH_SAVE:\n\n[{editable.reply_to_message.from_user.first_name}](tg://user?id={editable.reply_to_message.from_user.id}) Got Batch Link!",
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Open Link", url=share_link)]])
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Open Link", url=short_link)]])
         )
     except Exception as err:
         await editable.edit(f"Something Went Wrong!\n\n**Error:** `{err}`")
@@ -113,10 +127,11 @@ async def save_media_in_channel(bot: Client, editable: Message, message: Message
         # get caption (if any)
         caption = message.caption if media.file_name else ""
         share_link = f"https://redirect.nonamebesty.workers.dev?start=Shakthimaan_{str_to_b64(file_er_id)}"
+        short_link = get_short(share_link)
         await editable.edit(
-            f"**{file_name} - {file_size}\n\n{share_link}**",
+            f"**{file_name} - {file_size}\n\n{short_link}**",
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton("Open Link", url=share_link)],
+                [[InlineKeyboardButton("Open Link", url=short_link)],
                  [InlineKeyboardButton("Bots Channel", url="https://telegram.me/AS_botzz"),
                   InlineKeyboardButton("Support Group", url="https://telegram.me/moviekoodu")]]
             ),
