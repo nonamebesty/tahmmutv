@@ -81,7 +81,7 @@ async def save_batch_media_in_channel(bot: Client, editable: Message, message_id
                 InlineKeyboardButton("Delete Batch", callback_data="closeMessage")
             ]])
         )
-        share_link = f"https://redirect.nonamebesty.workers.dev?start=Shakthimaan_{str_to_b64(str(SaveMessage.id))}"
+        share_link = f"🔻 Direct Telegram Files 🔻\n\n🔹 https://redirect.nonamebesty.workers.dev?start=Shakthimaan_{str_to_b64(str(SaveMessage.id))}\n⁉️ How to Download ▼\nhttps://t.me/demoshort/49"
         short_link = get_short(share_link)
         await editable.edit(
             f"**{short_link}**",
@@ -132,7 +132,7 @@ async def save_media_in_channel(bot: Client, editable: Message, message: Message
         share_link = f"https://redirect.nonamebesty.workers.dev?start=Shakthimaan_{str_to_b64(file_er_id)}"
         short_link = get_short(share_link)
         await editable.edit(
-            f"**🔸{file_name} - {file_size}\n\n🔹{short_link}**",
+            f"**🔸{caption} - {file_size}\n\n🔹{short_link}**",
             reply_markup=InlineKeyboardMarkup(
                 [[InlineKeyboardButton("Open Link", url=short_link)],
                  [InlineKeyboardButton("Bots Channel", url="https://telegram.me/AS_botzz"),
