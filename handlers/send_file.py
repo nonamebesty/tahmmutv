@@ -20,7 +20,7 @@ async def reply_forward(message: Message, file_id: int):
         await message.reply_text(
             f"**Files will be Deleted After 15 min**\n\n"
             f"**__To Retrive the Stored File, just again open the link!__**\n\n"
-            f"**{file_name}\n\nLink:** https://thammutvtbot.jasurun.workers.dev?start=JAsuran_{str_to_b64(str(file_id))}",
+            f"**{caption}\n\nLink:** https://thammutvtbot.jasurun.workers.dev?start=JAsuran_{str_to_b64(str(file_id))}",
             disable_web_page_preview=True, quote=True)
     except FloodWait as e:
         await asyncio.sleep(e.value)
