@@ -19,7 +19,7 @@ async def reply_forward(message: Message, file_id: int):
         caption = message.caption if media.file_name else ""
         await message.reply_text(
             f"**__To Retrive the Stored File, just again open the link!__**\n\n"
-            f"**{caption}\n\nLink 🔗 - ** https://telegram.me/{Config.BOT_USERNAME}?start=ThammuTV_{str_to_b64(str(file_id))}",
+            f"**{caption}\n\nLink 🔗 - ** https://telegram.me/{Config.BOT_USERNAME}?start=ThammuTV_{str_to_b64(str(file_er_id))}",
             disable_web_page_preview=True, quote=True)
     except FloodWait as e:
         await asyncio.sleep(e.value)
