@@ -62,7 +62,7 @@ async def save_batch_media_in_channel(bot: Client, editable: Message, message_id
                 InlineKeyboardButton("Delete Batch", callback_data="closeMessage")
             ]])
         )
-        share_link = f"https://telegram.me/{Config.BOT_USERNAME}?start=ThammuTV_{str_to_b64(str(file_id))}"
+        share_link = f"https://telegram.me/{Config.BOT_USERNAME}?start=ThammuTV_{str_to_b64(str(file_er_id))}"
 
         await editable.edit(
             f"**Link:** {share_link}",
@@ -110,7 +110,7 @@ async def save_media_in_channel(bot: Client, editable: Message, message: Message
         file_size = humanbytes(media.file_size)
         # get caption (if any)
         caption = message.caption if media.file_name else ""
-        share_link = f"https://telegram.me/{Config.BOT_USERNAME}?start=ThammuTV_{str_to_b64(str(file_id))}"
+        share_link = f"https://telegram.me/{Config.BOT_USERNAME}?start=ThammuTV_{str_to_b64(str(file_er_id))}"
         await editable.edit(
             f"**{caption}\n\nLink 🔗 - **{share_link}",
             reply_markup=InlineKeyboardMarkup(
