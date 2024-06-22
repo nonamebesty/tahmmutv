@@ -6,8 +6,7 @@ from pyrogram import Client
 from pyrogram.types import Message
 from pyrogram.errors import FloodWait
 from handlers.helpers import str_to_b64
-import string
-import random
+
 
 async def reply_forward(message: Message, file_id: int):
     try:
@@ -19,10 +18,9 @@ async def reply_forward(message: Message, file_id: int):
         # get caption (if any)
         caption = message.caption if media.file_name else ""
         await message.reply_text(
-            f"**Kindly Subscribe and Support My Youtube Channel: https://www.youtube.com/@JAsuranvideos**\n\n"
             f"**Files will be Deleted After 15 min**\n\n"
             f"**__To Retrive the Stored File, just again open the link!__**\n\n"
-            f"**<blockquote>{caption}\n\nLink:** https://redirect.nonamebesty.workers.dev?start=Shakthimaan_{str_to_b64(str(file_id))}</blockquote>",
+            f"**{file_name}\n\nLink:** https://thammutvtbot.jasurun.workers.dev?start=JAsuran_{str_to_b64(str(file_id))}",
             disable_web_page_preview=True, quote=True)
     except FloodWait as e:
         await asyncio.sleep(e.value)
@@ -53,4 +51,3 @@ async def delete_after_delay(message, delay):
         await message.delete()
     except Exception as e:
         print(f"Error deleting message {sent_message.message_id}: {e}")
-
