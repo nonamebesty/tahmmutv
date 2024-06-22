@@ -80,8 +80,8 @@ async def start(bot: Client, cmd: Message):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton("Support Group", url="https://t.me/moviekoodu"),
-                        InlineKeyboardButton("Bots Channel", url="https://t.me/AS_botzz")
+                        InlineKeyboardButton("Support Group", url="https://t.me/TshaTTv"),
+                        InlineKeyboardButton("Bots Channel", url="https://t.me/ThammuTV")
                     ],
                     [
                         InlineKeyboardButton("About Bot", callback_data="aboutbot"),
@@ -126,7 +126,7 @@ async def main(bot: Client, message: Message):
                 return
 
         if message.from_user.id in Config.BANNED_USERS:
-            await message.reply_text("Sorry, You are banned!\n\nContact [Support Group](https://t.me/asuMoviefinders)",
+            await message.reply_text("Sorry, You are banned!\n\nContact [Support Group](https://t.me/ThammuTV)",
                                      disable_web_page_preview=True)
             return
 
@@ -154,7 +154,7 @@ async def main(bot: Client, message: Message):
         try:
             forwarded_msg = await message.forward(Config.DB_CHANNEL)
             file_er_id = str(forwarded_msg.id)
-            share_link = f"https://t.me/{Config.BOT_USERNAME}?start=AsBots_{str_to_b64(file_er_id)}"
+            share_link = f"https://t.me/{Config.BOT_USERNAME}?start=ThammuTV_{str_to_b64(file_er_id)}"
             CH_edit = await bot.edit_message_reply_markup(message.chat.id, message.id,
                                                           reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
                                                               "Get Sharable Link", url=share_link)]]))
@@ -356,8 +356,8 @@ async def button(bot: Client, cmd: CallbackQuery):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton("Support Group", url="https://t.me/AsMoviefinders"),
-                        InlineKeyboardButton("Bots Channel", url="https://t.me/AS_botzz")
+                        InlineKeyboardButton("Support Group", url="https://t.me/TshaTTv"),
+                        InlineKeyboardButton("Bots Channel", url="https://t.me/ThammuTV")
                     ],
                     [
                         InlineKeyboardButton("About Bot", callback_data="aboutbot"),
@@ -377,7 +377,7 @@ async def button(bot: Client, cmd: CallbackQuery):
                 user = await bot.get_chat_member(channel_chat_id, cmd.message.chat.id)
                 if user.status == "kicked":
                     await cmd.message.edit(
-                        text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/AsuMoviefinders).",
+                        text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/ThammuTV).",
                         disable_web_page_preview=True
                     )
                     return
@@ -400,7 +400,7 @@ async def button(bot: Client, cmd: CallbackQuery):
                 return
             except Exception:
                 await cmd.message.edit(
-                    text="Something went Wrong. Contact my [Support Group](https://t.me/AsuMoviefinders).",
+                    text="Something went Wrong. Contact my [Support Group](https://t.me/ThammuTV).",
                     disable_web_page_preview=True
                 )
                 return
@@ -410,8 +410,8 @@ async def button(bot: Client, cmd: CallbackQuery):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton("Support Group", url="https://t.me/asumoviefinders"),
-                        InlineKeyboardButton("Bots Channel", url="https://t.me/AS_botzz")
+                        InlineKeyboardButton("Support Group", url="https://t.me/TshaTTv"),
+                        InlineKeyboardButton("Bots Channel", url="https://t.me/ThammuTV")
                     ],
                     [
                         InlineKeyboardButton("About Bot", callback_data="aboutbot"),
