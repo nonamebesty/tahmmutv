@@ -4,7 +4,7 @@ import os
 class Config(object):
 	API_ID = int(os.environ.get("API_ID", "21608308"))
 	API_HASH = os.environ.get("API_HASH", 'decdf8683a924e72220a94e49ed8d3ce')
-	BOT_TOKEN = os.environ.get("BOT_TOKEN", ':AAGP96A9iTpDdd1-AHTCCweXi2auRp7hQu0')
+	BOT_TOKEN = os.environ.get("BOT_TOKEN", '6510386769:AAGP96A9iTpDdd1-AHTCCweXi2auRp7hQu0')
 	BOT_USERNAME = os.environ.get("BOT_USERNAME", 'ThammuTv_T_bot')
 	DB_CHANNEL = int(os.environ.get("DB_CHANNEL", '-1001888985177'))
 	BOT_OWNER = int(os.environ.get("BOT_OWNER", '1904146512'))
